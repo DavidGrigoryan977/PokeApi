@@ -1,0 +1,33 @@
+.cards {
+  width: 300px;
+  border: 4px solid white;
+  margin: 10px;
+}
+
+.cardMedia {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  height: 240px;
+  background-color: #ffcc01;
+}
+
+.cardName{
+  color: #ffcc01;
+  font-family: fantasy;
+  font-size: 26px;
+  padding: 8px 20px;
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.cardFirstChild{
+  background-color: #1976d2;
+}
+
+.cardNameParrent{
+  overflow: hidden;
+}

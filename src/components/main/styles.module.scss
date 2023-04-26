@@ -1,0 +1,34 @@
+.mainWrapper{
+  text-align: center;
+}
+
+.buttonsWrapper Button {
+  margin: 5px;
+  font-family: fantasy;
+  font-size: 20px;
+  color: #ffcc01;
+  width: 100px;
+  border: 2px solid white;
+}
+
+.ArrowCircle  {
+  width: 40px;
+  height: 40px;
+}
+
+.buttonsWrapper{
+  margin: 40px 0;
+}
+
+.pokemonLogo{
+  width: 30%;
+  min-width: 200px;
+  padding-top: 30px;
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 30px;
+}
