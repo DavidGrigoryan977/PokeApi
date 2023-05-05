@@ -25,12 +25,24 @@
         "react",
         "@typescript-eslint",
         "prettier"
-
     ],
     "rules": {
+        "@typescript-eslint/default-param-last": "error",
         "react/react-in-jsx-scope": ["off"],
         "react/jsx-uses-react": ["off"],
         "react/jsx-props-no-spreading": ["warn"],
-        "react/no-unescaped-entities": ["off"]
+        "react/no-unescaped-entities": ["off"],
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
+        "default-param-last": 0,
+        "import/no-cycle": 0,
+        "no-nested-ternary": 0,
+        "prettier/prettier": [
+            "warn",
+            {
+                "singleQuote": true,
+                "semi": true
+            }
+        ]
     }
 }

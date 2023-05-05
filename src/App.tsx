@@ -1,6 +1,7 @@
-import React from "react";
-import styles from "./styles.module.scss";
-import Main from "./components/main/main";
+import React from 'react';
+
+import styles from './styles.module.scss';
+import Main from './components/main/main';
 
 function App() {
   return (

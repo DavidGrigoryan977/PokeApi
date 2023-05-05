@@ -1,33 +1,13 @@
-import * as React from "react";
-import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
-import Backdrop from "@mui/material/Backdrop";
-import { Box, Button, Fade, Modal } from "@mui/material";
-import { useState } from "react";
-import styles from "./styles.module.scss";
+import * as React from 'react';
+import { ArrowCircleLeft, ArrowCircleRight } from '@mui/icons-material';
+import Backdrop from '@mui/material/Backdrop';
+import { Box, Button, Fade, Modal } from '@mui/material';
+import { useState } from 'react';
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
+import styles from './styles.module.scss';
+import { ModalViewProps } from '../../types/types';
 
-type Type = {
-  type: {
-    name: string;
-  };
-};
-export type Data = {
-  types: Type[];
-  weight: number;
-  height: number;
-  sprites: {
-    front_default: string;
-    back_default: string;
-  };
-  name: string;
-};
-
-type ModalViewProps = {
-  data: Data;
-  func: (b: boolean) => void;
-  open: boolean;
-};
-
-function ModalView({ data, func, open }: ModalViewProps) {
+function ModalView({ data, handleClose, open }: ModalViewProps) {
   const [picChanger, setPicChanger] = useState<boolean>(false);
 
   return (
@@ -36,18 +16,10 @@ function ModalView({ data, func, open }: ModalViewProps) {
       aria-describedby="transition-modal-description"
       open={open}
       onClose={() => {
-        func(false);
-        setTimeout(() => {
-          setPicChanger(false);
-        }, 100);
+        handleClose(false);
+        setPicChanger(false);
       }}
-      closeAfterTransition
       slots={{ backdrop: Backdrop }}
-      slotProps={{
-        backdrop: {
-          timeout: 500,
-        },
-      }}
     >
       <Fade in={open}>
         <div className={styles.modalBox}>
@@ -62,46 +34,56 @@ function ModalView({ data, func, open }: ModalViewProps) {
                 <ArrowCircleLeft className={styles.ArrowCircle} />
               </Button>
               {!picChanger ? (
+                data?.sprites.front_default ? (
+                  <img
+                    className={styles.pokeImg}
+                    src={data?.sprites.front_default}
+                    alt="front-img"
+                  />
+                ) : (
+                  <div className={styles.pokeImg}>
+                    <ImageNotSupportedIcon
+                      color="primary"
+                      sx={{ fontSize: '100px' }}
+                    />
+                  </div>
+                )
+              ) : data?.sprites.back_default ? (
                 <img
                   className={styles.pokeImg}
-                  src={data ? data.sprites.front_default : ""}
-                  alt="front-img"
-                />
-              ) : (
-                <img
-                  className={styles.pokeImg}
-                  src={data ? data.sprites.back_default : ""}
+                  src={data?.sprites.back_default}
                   alt="back-img"
                 />
+              ) : (
+                <div className={styles.pokeImg}>
+                  <ImageNotSupportedIcon
+                    color="primary"
+                    sx={{ fontSize: '100px' }}
+                  />
+                </div>
               )}
               <Button onClick={() => setPicChanger((prev) => !prev)}>
                 <ArrowCircleRight className={styles.ArrowCircle} />
               </Button>
             </div>
             <div className={styles.descriptionWrapper}>
-              <div className={styles.modalName}>
-                {data ? data.name.toUpperCase() : ""}
-              </div>
+              <div className={styles.modalName}>{data?.name.toUpperCase()}</div>
               <div className={styles.descLinesWrapper}>
                 <div className={styles.descriptionLines}>
                   Type :
                   <span className={styles.descCount}>
-                    {data ? data.types[0].type.name : ""}
+                    {data?.types[0].type.name}
                   </span>
                 </div>
                 <div className={styles.descriptionLines}>
                   Weight :
-                  <span className={styles.descCount}>
-                    {data ? data.weight : ""}
-                  </span>
+                  <span className={styles.descCount}>{data?.weight}</span>
                   KG
                 </div>
                 <div className={styles.descriptionLines}>
                   Height :
-                  <span className={styles.descCount}>
-                    {data ? data.height : ""}0
-                  </span>
-                  CM
+                  <span className={styles.descCount}>{data?.height}</span>
+                  0CM
                 </div>
               </div>
             </div>

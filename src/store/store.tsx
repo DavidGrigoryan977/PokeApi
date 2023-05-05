@@ -1,7 +1,13 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import thunk from "redux-thunk";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { initialPokeData, pokemonsDataReducer } from "./slices";
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import { pokemonsDataReducer } from './slices';
+import { StateType } from '../types/types';
+
+const initialPokeData: StateType = {
+  data: null,
+  modalPoke: null,
+  pokemonTypes: [],
+};
 
 const store = createStore(
   combineReducers({
@@ -13,10 +19,4 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-type DispatchFunc = () => AppDispatch;
-export const useAppDispatch: DispatchFunc = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;

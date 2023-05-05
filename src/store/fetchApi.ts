@@ -8,14 +8,10 @@ export async function fetchDataFromAPI(fetchOffset: number) {
         return await response.json();
       }
     }
-    if (!fetchOffset) {
-      const response = await fetch("https://pokeapi.co/api/v2/pokemon");
-      return await response.json();
-    }
   } catch (e) {
     return e;
   }
-  return fetchOffset;
+  return null;
 }
 
 export async function getModalImg(url: string) {
@@ -28,6 +24,24 @@ export async function getModalImg(url: string) {
 }
 
 export async function getCardsImg(url: string) {
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function getTypesMenu(url: string) {
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function getSpecifyType(url: string) {
   try {
     const response = await fetch(url);
     return await response.json();
