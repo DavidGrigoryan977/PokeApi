@@ -2,14 +2,25 @@ import * as React from 'react';
 import { ArrowCircleLeft, ArrowCircleRight } from '@mui/icons-material';
 import Backdrop from '@mui/material/Backdrop';
 import { Box, Button, Fade, Modal } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
-import styles from './styles.module.scss';
 import { ModalViewProps } from '../../types/types';
+import { descriptionLines, descriptionWrapper, modalBox, modalName, modalPhotoWrapper, pokeImg } from './styles';
 
 function ModalView({ data, handleClose, open }: ModalViewProps) {
   const [picChanger, setPicChanger] = useState<boolean>(false);
+  const [photoSrc, setPhotoSrc] = useState<any>({
+    front: data?.sprites.front_default,
+    back: data?.sprites.front_default,
+  });
 
+  useEffect(() => {
+    setPhotoSrc({
+      front: data?.sprites.front_default,
+      back: data?.sprites.back_default,
+    });
+    setPicChanger(false);
+  }, [data]);
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -17,78 +28,77 @@ function ModalView({ data, handleClose, open }: ModalViewProps) {
       open={open}
       onClose={() => {
         handleClose(false);
-        setPicChanger(false);
       }}
       slots={{ backdrop: Backdrop }}
     >
       <Fade in={open}>
-        <div className={styles.modalBox}>
+        <Box sx={modalBox}>
           <Box>
             <img
-              className={styles.pokemonLogoModal}
+              style={{ width: '150px', marginTop: '20px' }}
               src="http://surl.li/gmzcb"
               alt="pokemon-logo"
             />
-            <div className={styles.modalPhotoWrapper}>
+            <Box sx={modalPhotoWrapper}>
               <Button onClick={() => setPicChanger((prev) => !prev)}>
-                <ArrowCircleLeft className={styles.ArrowCircle} />
+                <ArrowCircleLeft />
               </Button>
               {!picChanger ? (
-                data?.sprites.front_default ? (
+                photoSrc.front ? (
                   <img
-                    className={styles.pokeImg}
-                    src={data?.sprites.front_default}
+                    style={pokeImg}
+                    src={photoSrc.front}
                     alt="front-img"
                   />
                 ) : (
-                  <div className={styles.pokeImg}>
+                  <Box sx={pokeImg}>
                     <ImageNotSupportedIcon
                       color="primary"
                       sx={{ fontSize: '100px' }}
                     />
-                  </div>
+                  </Box>
                 )
-              ) : data?.sprites.back_default ? (
+              ) : photoSrc.back ? (
                 <img
-                  className={styles.pokeImg}
-                  src={data?.sprites.back_default}
+                  style={pokeImg}
+                  src={photoSrc.back}
                   alt="back-img"
                 />
               ) : (
-                <div className={styles.pokeImg}>
+                <Box sx={pokeImg}>
                   <ImageNotSupportedIcon
                     color="primary"
                     sx={{ fontSize: '100px' }}
                   />
-                </div>
+                </Box>
               )}
               <Button onClick={() => setPicChanger((prev) => !prev)}>
-                <ArrowCircleRight className={styles.ArrowCircle} />
+                <ArrowCircleRight />
               </Button>
-            </div>
-            <div className={styles.descriptionWrapper}>
-              <div className={styles.modalName}>{data?.name.toUpperCase()}</div>
-              <div className={styles.descLinesWrapper}>
-                <div className={styles.descriptionLines}>
+            </Box>
+            <Box sx={descriptionWrapper}>
+              <Box sx={modalName}>{data?.name.toUpperCase()}</Box>
+              <Box sx={{ padding: '10px' }}>
+                <Box sx={descriptionLines}>
                   Type :
-                  <span className={styles.descCount}>
+                  <span style={{ marginLeft: '5px' }}>
                     {data?.types[0].type.name}
                   </span>
-                </div>
-                <div className={styles.descriptionLines}>
+                </Box>
+                <Box sx={descriptionLines}>
                   Weight :
-                  <span className={styles.descCount}>{data?.weight}</span>
+                  <span style={{ marginLeft: '5px' }}>{data?.weight}</span>
                   KG
-                </div>
-                <div className={styles.descriptionLines}>
+                </Box>
+                <Box sx={descriptionLines}>
                   Height :
-                  <span className={styles.descCount}>{data?.height}</span>
+                  <span style={{ marginLeft: '5px' }}>{data?.height}</span>
                   0CM
-                </div>
-              </div>
-            </div>
+                </Box>
+              </Box>
+            </Box>
           </Box>
-        </div>
+        </Box>
       </Fade>
     </Modal>
   );

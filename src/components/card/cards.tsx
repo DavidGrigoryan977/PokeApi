@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import { CardActionArea, CircularProgress } from '@mui/material';
+import { Box, CardActionArea, CircularProgress } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
-import styles from './styles.module.scss';
 import { getCardsImg } from '../../store/fetchApi';
-
-type CardsProps = {
-  name: string;
-  src: string;
-  onClick: () => void;
-};
+import { CardsProps } from '../../types/types';
+import { cardName, cardMedia, cards } from './styles';
 
 function Cards({ name, src, onClick }: CardsProps) {
   const [pokeImgSrc, setPokeImgSrc] = useState<string>('');
@@ -31,10 +26,10 @@ function Cards({ name, src, onClick }: CardsProps) {
   }, [src]);
 
   return (
-    <Card onClick={onClick} className={styles.cards}>
-      <div className={styles.cardFirstChild}>
+    <Card onClick={onClick} sx={cards}>
+      <Box sx={{ backgroundColor: '#1976d2' }}>
         <CardActionArea>
-          <div className={styles.cardMedia}>
+          <Box sx={cardMedia}>
             {loading && !pokeImgSrc ? (
               <CircularProgress />
             ) : pokeImgSrc ? (
@@ -45,12 +40,12 @@ function Cards({ name, src, onClick }: CardsProps) {
                 sx={{ fontSize: '100px' }}
               />
             )}
-          </div>
-          <div className={styles.cardNameParent}>
-            <div className={styles.cardName}>{name.toUpperCase()}</div>
-          </div>
+          </Box>
+          <Box sx={{ overflow: 'hidden' }}>
+            <Box sx={cardName}>{name.toUpperCase()}</Box>
+          </Box>
         </CardActionArea>
-      </div>
+      </Box>
     </Card>
   );
 }

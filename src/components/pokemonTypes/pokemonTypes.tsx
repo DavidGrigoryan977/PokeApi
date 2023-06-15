@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loadData, loadSpecifyData, loadTypesMenu } from '../../store/slices';
-import styles from './styles.module.scss';
 import { StateType, TypeMenuType } from '../../types/types';
+import { wrapper } from './styles';
 
 function TypesMenu({ offset }: { offset: number }) {
   const dispatch = useDispatch<any>();
   const typesMenu = useSelector(
     (state: { pokemonsData: StateType }) => state.pokemonsData.pokemonTypes
+  );
+  const pokeAllCount = useSelector(
+    (state: { pokemonsData: StateType }) => state.pokemonsData.allCount
   );
 
   const navigate = useNavigate();
@@ -18,7 +21,7 @@ function TypesMenu({ offset }: { offset: number }) {
 
   useEffect(() => {
     dispatch(loadTypesMenu('https://pokeapi.co/api/v2/type'));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (pathname === '/') {
@@ -32,32 +35,32 @@ function TypesMenu({ offset }: { offset: number }) {
         dispatch(loadSpecifyData(item.url));
       }
       if (pathname.slice(1) === 'home') {
-        dispatch(loadData(offset));
+        dispatch(loadData(offset, pokeAllCount));
       }
       return null;
     });
-  }, [pathname, typesMenu]);
+  }, [dispatch, pathname, typesMenu]);
 
   const handleClick = (item: { name: string }) => {
     navigate(item.name);
   };
 
   return (
-    <div className={styles.MenuItemsWrapper}>
+    <Box sx={wrapper}>
       {typesMenu?.map((item: TypeMenuType) => {
         return (
-          <div key={item.name} className={styles.menuItem}>
+          <Box key={item.name}>
             <Chip
               label={item.name.toUpperCase()}
               onClick={() => handleClick(item)}
-              className={styles.menuItem}
               color="primary"
+              sx={{ margin: '5px' }}
               variant={pathname.slice(1) === item.name ? 'outlined' : 'filled'}
             />
-          </div>
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 }
 

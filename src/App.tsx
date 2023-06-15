@@ -1,13 +1,12 @@
 import React from 'react';
-
-import styles from './styles.module.scss';
+import { Box } from '@mui/material';
 import Main from './components/main/main';
 
 function App() {
   return (
-    <div className={styles.app}>
+    <Box sx={{ textAlign: 'center' }}>
       <Main />
-    </div>
+    </Box>
   );
 }
 

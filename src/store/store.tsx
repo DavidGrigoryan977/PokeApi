@@ -7,6 +7,7 @@ const initialPokeData: StateType = {
   data: null,
   modalPoke: null,
   pokemonTypes: [],
+  allCount: 0,
 };
 
 const store = createStore(

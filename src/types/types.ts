@@ -53,4 +53,11 @@ export type StateType = {
   data: null | PokemonType[];
   modalPoke: null | Data;
   pokemonTypes: PokemonType[];
+  allCount: number;
+};
+
+export type CardsProps = {
+  name: string;
+  src: string;
+  onClick: () => void;
 };

@@ -24,8 +24,10 @@ export const loadTypesMenu = (url: string) => (dispatch: AppDispatch) => {
   });
 };
 
-export const loadData = (fetchCount: number) => (dispatch: AppDispatch) =>
-  fetchDataFromAPI(fetchCount).then((data) => {
+export const loadData = (fetchCount: number, pokeAllCount: number) => (
+  dispatch: AppDispatch
+) =>
+  fetchDataFromAPI(fetchCount, pokeAllCount).then((data) => {
     if (data) {
       dispatch(renderPokemonsDispatch(data));
     }
@@ -47,6 +49,7 @@ export const pokemonsDataReducer = (
     return {
       ...state,
       data: (action.payload as Payload).results,
+      allCount: (action.payload as Payload).count,
     };
   }
   if (action.type === 'MODAL_POKE_PIC_FETCH') {
